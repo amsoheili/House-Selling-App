@@ -1,0 +1,13 @@
+.appbar .links {
+  margin-right: 5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.appbar .btn {
+  background: none;
+  color: #fff;
+  padding: 1rem 2rem;
+}

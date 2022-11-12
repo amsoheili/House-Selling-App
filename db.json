@@ -1,0 +1,38 @@
+{
+  "users": [
+    {
+      "email": "admin@gmail.com",
+      "password": "$2a$10$4JjiqvS9NzUdkwIUWRwr3eiXXz0QUSP.oTwLRQEuerwMDJB3v/EAG",
+      "id": 1
+    },
+    {
+      "email": "admin",
+      "password": "admin",
+      "id": 2
+    }
+  ],
+  "houses": [
+    {
+      "location": "l1",
+      "address": "a1",
+      "phoneNumber": "123",
+      "description": "d1",
+      "id": 2
+    },
+    {
+      "location": "l2",
+      "address": "a2",
+      "phoneNumber": "123",
+      "description": "d2",
+      "id": 3
+    },
+    {
+      "location": "l3",
+      "address": "a3",
+      "phoneNumber": "123",
+      "description": "d3",
+      "id": 4
+    }
+  ],
+  "profile": { "name": "typicode" }
+}
