@@ -2,17 +2,44 @@ import classes from "./RegisterHouse.module.css";
 import useInput from "../../hooks/use-input";
 import { useEffect } from "react";
 import { useState } from "react";
+import { MapContainer, TileLayer, Popup, Marker } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import DraggableMarker from "./DraggableMarker";
+// import { Marker } from "https://cdn.esm.sh/react-leaflet";
 
+// import { Marker } from "leaflet";
 const RegisterHouse = (props) => {
   const [isUsernameRepeated, setIsUsernameRepeated] = useState(false);
+  const [position, setPosition] = useState({
+    lat: 35.71543738862901,
+    lng: 51.22392654418946,
+  });
 
   const {
-    value: enteredUsername,
-    hasError: usernameInputHasError,
-    isValid: enteredUsernameIsValid,
-    valueChangeHandler: usernameChangeHandler,
-    inputBlurHandler: usernameBlurHandler,
-    reset: resetUsernameHandler,
+    value: enteredPhoneNumber,
+    hasError: phoneNumberInputHasError,
+    isValid: enteredPhoneNumberIsValid,
+    valueChangeHandler: phoneNumberChangeHandler,
+    inputBlurHandler: phoneNumberBlurHandler,
+    reset: resetPhoneNumberHandler,
+  } = useInput((value) => value.trim() !== "");
+
+  const {
+    value: enteredAddress,
+    hasError: addressInputHasError,
+    isValid: enteredAddressIsValid,
+    valueChangeHandler: addressChangeHandler,
+    inputBlurHandler: addressBlurHandler,
+    reset: resetAddressHandler,
+  } = useInput((value) => value.trim() !== "");
+
+  const {
+    value: enteredDescription,
+    hasError: descriptionInputHasError,
+    isValid: enteredDescriptionIsValid,
+    valueChangeHandler: descriptionChangeHandler,
+    inputBlurHandler: descriptionBlurHandler,
+    reset: resetDescriptionHandler,
   } = useInput((value) => value.trim() !== "");
 
   // useEffect(() => {
@@ -26,105 +53,99 @@ const RegisterHouse = (props) => {
   //   };
   // }, [enteredUsername]);
 
-  const {
-    value: enteredPassword,
-    hasError: passwordInputHasError,
-    isValid: enteredPasswordIsValid,
-    valueChangeHandler: passwordChangeHandler,
-    inputBlurHandler: passwordBlurHandler,
-    reset: resetPasswordHandler,
-  } = useInput((value) => value.trim() !== "");
-
-  const {
-    value: enteredRepeatedPassword,
-    hasError: repeatedPasswordInputHasError,
-    isValid: enteredRepeatedPasswordIsValid,
-    valueChangeHandler: repeatedPasswordChangeHandler,
-    inputBlurHandler: repeatedPasswordBlurHandler,
-    reset: resetRepeatedPasswordHandler,
-  } = useInput((value) => value.trim() === enteredPassword);
-
   let formIsValid = false;
   if (
-    enteredUsernameIsValid &&
-    enteredPasswordIsValid &&
-    enteredRepeatedPasswordIsValid
+    enteredPhoneNumberIsValid &&
+    enteredAddressIsValid &&
+    enteredDescriptionIsValid
   ) {
     formIsValid = true;
   }
 
   const resetValues = () => {
-    resetUsernameHandler();
-    resetPasswordHandler();
-    resetRepeatedPasswordHandler();
+    resetPhoneNumberHandler();
+    resetAddressHandler();
+    resetDescriptionHandler();
   };
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-
-    if (!formIsValid && !isUsernameRepeated) {
+    if (!formIsValid) {
       return;
     }
-
-    const newUser = {
-      username: enteredUsername,
-      password: enteredPassword,
-      orders: [],
-      cartItems: [],
+    const newHouse = {
+      location: position,
+      phoneNumber: enteredPhoneNumber,
+      address: enteredAddress,
+      description: enteredDescription,
     };
 
-    props.onAddUser(newUser);
-
+    //   props.onAddUser(newUser);
     resetValues();
   };
 
+  const setPositionHandler = (selectedPosition) => {
+    setPosition(selectedPosition);
+  };
   return (
     <div className={classes["sign-up"]}>
       <div className={classes["form-container"]}>
-        <h1>SIGN UP</h1>
+        <h1>Register House</h1>
         <form onSubmit={formSubmitHandler}>
-          <div className={classes.username}>
-            {/* <label htmlFor="username">Username</label> */}
+          <div className={classes.location}>
+            <MapContainer
+              center={[position.lat, position.lng]}
+              zoom={13}
+              scrollWheelZoom={false}
+              className={classes.map}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <DraggableMarker
+                setPositionHandler={setPositionHandler}
+                position={position}
+              />
+            </MapContainer>
+          </div>
+          <div>
             <input
-              name="username"
+              name="phoneNumber"
               type="text"
-              placeholder="Username"
-              value={enteredUsername}
-              onChange={usernameChangeHandler}
-              onBlur={usernameBlurHandler}
+              placeholder="Phone Number"
+              value={enteredPhoneNumber}
+              onChange={phoneNumberChangeHandler}
+              onBlur={phoneNumberBlurHandler}
             />
             <div className={classes.hasError}>
-              {usernameInputHasError && "Enter a valid username \n"}
-              {isUsernameRepeated && "Username is choosed"}
+              {!enteredPhoneNumberIsValid && "Enter a valid phone number"}
             </div>
           </div>
           <div>
-            {/* <label htmlFor="password">Password</label> */}
             <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={enteredPassword}
-              onChange={passwordChangeHandler}
-              onBlur={passwordBlurHandler}
+              name="Address"
+              type="text"
+              placeholder="Address"
+              value={enteredAddress}
+              onChange={addressChangeHandler}
+              onBlur={addressBlurHandler}
             />
             <div className={classes.hasError}>
-              {passwordInputHasError && "Enter a valid password"}
+              {!enteredAddressIsValid && "Enter a valid address"}
             </div>
           </div>
           <div>
-            {/* <label htmlFor="repeat-passwor">Repeat Password</label> */}
             <input
-              name="repeat-password"
-              type="password"
-              placeholder="Repeat Password"
-              value={enteredRepeatedPassword}
-              onChange={repeatedPasswordChangeHandler}
-              onBlur={repeatedPasswordBlurHandler}
+              name="Description"
+              type="text"
+              placeholder="Description"
+              value={enteredDescription}
+              onChange={descriptionChangeHandler}
+              onBlur={descriptionBlurHandler}
             />
             <div className={classes.hasError}>
-              {repeatedPasswordInputHasError &&
-                "Entered passwords are not the same"}
+              {!enteredDescriptionIsValid && "Enter a valid description"}
             </div>
           </div>
           <div className={classes.submit}>
