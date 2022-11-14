@@ -11,3 +11,8 @@
 .card .info > div {
   margin: 1rem 0rem;
 }
+
+.card .location > div {
+  height: 20rem;
+  width: 20rem;
+}

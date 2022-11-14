@@ -20,7 +20,7 @@ const HomePage = () => {
       .then((result) => {
         setHouses(result);
 
-        // console.log(result);
+        console.log(result);
       })
       .catch(console.log);
   }, []);
