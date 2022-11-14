@@ -80,13 +80,15 @@ const RegisterHouse = (props) => {
       description: enteredDescription,
     };
 
-    //   props.onAddUser(newUser);
+    console.log(newHouse);
+    props.onAddHouse(newHouse);
     resetValues();
   };
 
   const setPositionHandler = (selectedPosition) => {
     setPosition(selectedPosition);
   };
+
   return (
     <div className={classes["sign-up"]}>
       <div className={classes["form-container"]}>
