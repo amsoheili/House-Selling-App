@@ -6,6 +6,11 @@
   margin: 1rem 0rem;
   padding: 1rem 2rem;
   background: var(--fourth-background-color) !important;
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: 10px 10px 8px #888888;
 }
 
 .card .info > div {
@@ -15,4 +20,16 @@
 .card .location > div {
   height: 20rem;
   width: 20rem;
+}
+
+.info {
+  width: 100%;
+}
+
+.info .content {
+  font-size: 1.3rem;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

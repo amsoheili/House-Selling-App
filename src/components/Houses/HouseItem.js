@@ -28,9 +28,18 @@ const HouseItem = (props) => {
           </MapContainer>
         </div>
         <div className={classes.info}>
-          <div>Address: {props.address}</div>
-          <div>Phone Number: {props.phoneNumber}</div>
-          <div>Description: {props.description}</div>
+          <div className={classes.content}>
+            <div>Address:</div>
+            <div>{props.address}</div>
+          </div>
+          <div className={classes.content}>
+            <div>Phone Number:</div>
+            <div>{props.phoneNumber}</div>
+          </div>
+          <div className={classes.content}>
+            <div>Description:</div>
+            <div>{props.description}</div>
+          </div>
         </div>
       </Card>
     </>

@@ -5,7 +5,15 @@ import classes from "./HomePage.module.css";
 
 const HomePage = () => {
   const [houses, setHouses] = useState([]);
-  const accessToken = localStorage.getItem("accessToken");
+  const [accessToken, setAccessToken] = useState(null);
+
+  const curAccessToken = localStorage.getItem("accessToken");
+
+  console.log(curAccessToken);
+  if (accessToken != curAccessToken && curAccessToken !== undefined) {
+    setAccessToken(curAccessToken);
+  }
+
   useEffect(() => {
     fetch("http://localhost:3001/houses", {
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -27,7 +35,12 @@ const HomePage = () => {
 
   return (
     <div className={classes.main}>
-      <HousesList houses={houses} />
+      {accessToken && <HousesList houses={houses} />}
+      {!accessToken && (
+        <div className={classes.error}>
+          <h1>You have not logged in yet</h1>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import "./App.css";
 import { Routes, BrowserRouter, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import HomePage from "./pages/HomePage";
@@ -6,10 +5,10 @@ import SignUpPage from "./pages/SignUp";
 import NotFoundPage from "./pages/NotFound";
 import RegisterHousePage from "./pages/RegisterHouse";
 import LoginPage from "./pages/LoginPage";
-
+import classes from "./App.module.css";
 function App() {
   return (
-    <div>
+    <div className={classes.children}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />

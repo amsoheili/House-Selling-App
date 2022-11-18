@@ -68,7 +68,9 @@ const Login = (props) => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data.accessToken);
-        localStorage.setItem("accessToken", data.accessToken);
+        if (data !== undefined) {
+          localStorage.setItem("accessToken", data.accessToken);
+        }
       });
 
     // SignInUser(dispatch, username);
